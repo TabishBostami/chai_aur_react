@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef} from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 // import "./App.css";
@@ -9,7 +9,7 @@ function App() {
   const [charAllowed, setCharAllowed] = useState(false);
   const [password, setPassword] = useState("");
 
-  // const passwordRef = useRef(null)
+  const passwordRef = useRef(null)
 
   const passwordGenerator = useCallback(() => {
     let pass = "";
@@ -22,11 +22,17 @@ function App() {
       pass += str.charAt(char);
     }
     setPassword(pass);
-  }, [length, numberAllowed, charAllowed, setPassword]);
+  }, [length, numberAllowed, charAllowed,setPassword]);
+
+  const copyPasswordToClipboard = useCallback(() => {
+    passwordRef.current?.select();
+    passwordRef.current?.setSelectionRange(0, 41);
+    window.navigator.clipboard.writeText(password)
+  }, [password])
 
   useEffect(() => {
     passwordGenerator();
-  },  );
+  },[length,numberAllowed,charAllowed,passwordGenerator]);
 
   return (
     <>
@@ -40,9 +46,10 @@ function App() {
             value={password}
             className="outline-none w-full py-1 px-3 "
             placeholder="Password"
+            ref={passwordRef}
             readOnly
           />
-          <button className="px-2 outline-none hover:bg-yellow-200 hover:text-black transition-all bg-blue-500 text-white shadow-lg shrink-0">
+          <button onClick={copyPasswordToClipboard} className="px-2 outline-none hover:bg-yellow-200 hover:text-black transition-all bg-blue-500 text-white shadow-lg shrink-0">
             Copy
           </button>
         </div>
