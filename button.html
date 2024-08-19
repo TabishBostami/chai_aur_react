@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #submitButton {
+  position: relative;
+  right: -140px;
+  transition: left 0.3s ease-in-out;
+  display: block;
+  margin-top: 10px;
+}
+
+  </style>
+</head>
+<body>
+  <form id="myForm">
+    <input type="text" id="name" placeholder="Name">
+    <input type="email" id="email" placeholder="Email">
+    <button type="button" id="submitButton">Submit</button>
+  </form>
+
+
+  <script>
+    let buttonPosition = 'center';
+
+document.getElementById('submitButton').addEventListener('click', function() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  
+});
+
+function moveButton(button) {
+  if (buttonPosition === 'center' || buttonPosition === 'left') {
+    button.style.left = '233px';
+    buttonPosition = 'right';
+  } else if (buttonPosition === 'right') {
+    button.style.left = '0px';
+    buttonPosition = 'left';
+  }
+}
+
+document.getElementById('submitButton').addEventListener('mouseover', function() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  
+  if (name === "" || email === "") {
+    moveButton(this);
+    this.textContent = "Pehle Form bhar";
+
+  }
+  else{
+    this.textContent = "Haan ab thik hai";
+  }
+});
+
+  </script>
+</body>
+</html>
